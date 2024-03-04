@@ -14,12 +14,20 @@
     box-sizing: border-box;
 }
 
+#root {
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     background: var(--c_1);
+    width: 100vw;
 }
 
 .l-container {
@@ -29,6 +37,8 @@ body {
     width: 100%;
     max-width: 1200px;
     padding: 30px;
+    min-height: 80vh;
+    margin: 0 auto;
 }
 
 @media screen and (max-width: 760px) {
