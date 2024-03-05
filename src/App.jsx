@@ -23,16 +23,34 @@ useEffect(() => {
 
 },[])
 
+// Card loading event listener
+// useEffect(()=> {
+
+
+//   const card
+  
+  
+  
+//   // Cleaner function for event listener
+
+//   return () =>{
+
+
+
+//   } 
+// },[])
+
 function fetchImages(){
 
 
-  fetch("https://api.nekosapi.com/v3/images/random?limit=10", {
+  fetch("https://api.nekosapi.com/v3/images/random?limit=6", {
     method: "GET",
   }).then(res => res.json())
   .then(data => {
     const imgsData = data.items.map( image => ({id: image.id, url: image.image_url}))
     setImgs(imgsData)
     console.log('Images State: ', images)
+    
   })
 }
 
@@ -48,38 +66,69 @@ function shuffler(arr){
   
   
   
-  function handleCardClick(){
-    console.log('Card ', card)
-   if(card.clicked != true){
-    card.clicked = true
+  function handleCardClick(id){
+    
+    
+   if(!clickedImgs.includes(id) ){
+    console.log(clickedImgs)
+    setClickedImgs([...clickedImgs,id])
      setScore(prevScore => prevScore+1)
-     setBestScore(prevBestScore => prevBestScore+1)
-     const shuffledCards = shuffler(images)
 
+     if(score >= bestScore){
+
+       setBestScore(prevBestScore => prevBestScore+1)
+
+     }
+
+    //  Shuffle images and set images
+     const shuffledCards = shuffler(images)
      setImgs(shuffledCards)
      console.log("Score: ",score, " Best Score:  ",bestScore )
+
+
    }else{
-    restartGame()
+    resetGame()
+
    }
   
   
   }
-  
 
   function restartGame(){
+
+    fetchImages()
+    setClickedImgs([])
+    setScore(0)
+
+  }
+  
+
+  function resetGame(){
+    setClickedImgs([])
     setScore(0)
   }
 
+  function checkGame(){
+
+
+    return score === images.length && images.length!==0
+
+  }
+  
 
   return (
     <>
-      <Modal />
+      {
+        checkGame() && <Modal handleClick={restartGame}/>
+      }
+    
+      {/* <Modal /> */}
       <Header score={score} bestScore={bestScore}/>
 
       <div className="l-container">
         {images.length > 0 ? 
-          images.map(img => <Card key={img.id } url={img.url} handleClick={handleCardClick}/>) : 
-            <h1 className="loading">Loading</h1>
+          images.map(img => <Card key={img.id } id={img.id} url={img.url} handleClick={()=>{handleCardClick(img.id)}}/>) : 
+            <h1 className="loading"> ⏳ Getting pictures ...</h1>
         }          
       </div>
     </>

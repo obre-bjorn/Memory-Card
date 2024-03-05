@@ -15,10 +15,10 @@
 }
 
 #root {
-  width: 100%;
+  width: 100vw;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  position: relative;
 }
 
 body {
@@ -27,9 +27,10 @@ body {
     align-items: center;
     min-height: 100vh;
     background: var(--c_1);
-    width: 100vw;
+    width: 100%;
 }
 header{
+    text-align: right;
     max-width: 1200px;
     width: 100%;
     display: flex;
@@ -38,11 +39,20 @@ header{
     align-items: center;
 
 }
+button{
+    padding: 1rem 2rem;
+    font: 1em sans-serif;
+    letter-spacing: .4rem;
+    text-transform: capitalize;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border: none;
+
+}
 .modal{
     position: fixed;
     height: 100vh;
     width: 100vw;
-    background-color: #f6d365;
+    
     z-index: 2;
     display: flex;
     align-items: center;
@@ -50,11 +60,18 @@ header{
 
 }
 .menu-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
     padding: 2rem;
-    min-height: 300px;
+    min-height: 400px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
     background-color: #353540;
+
 }
 
 .l-container {

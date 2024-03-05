@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 
 
-const Modal = () => {
+const Modal = ({handleClick}) => {
     return (
         <div className='modal'>
             <div className="menu-container">
-                <h1>YOU WON</h1>
-                <button>Play Again</button>
+                <h1>YOU WON!!!!</h1>
+                <button onClick={handleClick}>Play Again</button>
             </div>
         </div>
     );
@@ -14,6 +14,7 @@ const Modal = () => {
 
 
 Modal.propTypes = {
+    handleClick: PropTypes.func,
 
 };
 
