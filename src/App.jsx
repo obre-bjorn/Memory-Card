@@ -2,19 +2,18 @@ import { useState, useEffect } from 'react'
 
 import './App.css'
 import Card from './components/Card'
+import Header from './components/Header'
+import Modal from './components/Modal'
 
 
 // Using the Neko Anime API
-
-const card = {
- clicked: false,
-}
 
 
 function App() {
 
   const [score,setScore]  = useState(0)
   const [images,setImgs] = useState([])
+  const [clickedImgs,setClickedImgs] = useState([])
   const [bestScore,setBestScore] = useState(0)
   
 
@@ -31,10 +30,20 @@ function fetchImages(){
     method: "GET",
   }).then(res => res.json())
   .then(data => {
-    const imgsData = data.items.map( image => ({id: image.id, url: image.image_url,  clicked: false}))
+    const imgsData = data.items.map( image => ({id: image.id, url: image.image_url}))
     setImgs(imgsData)
     console.log('Images State: ', images)
   })
+}
+
+
+function shuffler(arr){
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+
 }
   
   
@@ -45,58 +54,34 @@ function fetchImages(){
     card.clicked = true
      setScore(prevScore => prevScore+1)
      setBestScore(prevBestScore => prevBestScore+1)
+     const shuffledCards = shuffler(images)
+
+     setImgs(shuffledCards)
      console.log("Score: ",score, " Best Score:  ",bestScore )
    }else{
-     console.log('GameOver: ', bestScore)
+    restartGame()
    }
   
   
   }
   
 
+  function restartGame(){
+    setScore(0)
+  }
 
 
   return (
     <>
-      <h1>{bestScore}</h1>
-      <button onClick={handleCardClick}>Play</button>
+      <Modal />
+      <Header score={score} bestScore={bestScore}/>
 
       <div className="l-container">
-      {images.length > 0 ? images.map(img => <Card key={img.id } url={img.url}/>) : <h1>Loading</h1>}
-          {/* <div className="b-game-card">
-            <div
-              className="b-game-card__cover"
-              style={{
-                backgroundImage: `url('https://pixabay.com/vectors/boxing-ring-wrestling-wrestler-149840/')`
-              }}
-            ></div>
-          </div>
-          <div className="b-game-card">
-            <div
-              className="b-game-card__cover"
-              style={{
-                backgroundImage: `url('https://andrewhawkes.github.io/codepen-assets/steam-game-cards/game_2.jpg')`
-              }}
-            ></div>
-          </div>
-          <div className="b-game-card">
-            <div
-              className="b-game-card__cover"
-              style={{
-                backgroundImage: `url('https://andrewhawkes.github.io/codepen-assets/steam-game-cards/game_3.jpg')`
-              }}
-            ></div>
-          </div>
-          <div className="b-game-card">
-            <div
-              className="b-game-card__cover"
-              style={{
-                backgroundImage: `url('https://andrewhawkes.github.io/codepen-assets/steam-game-cards/game_4.jpg')`
-              }}
-            ></div>
-          </div>
-          <Card/> */}
-        </div>
+        {images.length > 0 ? 
+          images.map(img => <Card key={img.id } url={img.url} handleClick={handleCardClick}/>) : 
+            <h1 className="loading">Loading</h1>
+        }          
+      </div>
     </>
   )
 }
