@@ -37,6 +37,7 @@ header{
     justify-content: space-between;
     margin: 0 auto;
     align-items: center;
+    padding: 30px;
 
 }
 button{
@@ -58,6 +59,9 @@ button{
     align-items: center;
     justify-content: center;
 
+}
+.logo{
+    text-align: left;
 }
 .menu-container{
     display: flex;

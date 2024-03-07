@@ -43,7 +43,7 @@ useEffect(() => {
 function fetchImages(){
 
 
-  fetch("https://api.nekosapi.com/v3/images/random?limit=6", {
+  fetch("https://api.nekosapi.com/v3/images/random?limit=10", {
     method: "GET",
   }).then(res => res.json())
   .then(data => {
@@ -124,7 +124,7 @@ function shuffler(arr){
     
       {/* <Modal /> */}
       <Header score={score} bestScore={bestScore}/>
-
+      <h1>{images.length-score} remaining</h1>
       <div className="l-container">
         {images.length > 0 ? 
           images.map(img => <Card key={img.id } id={img.id} url={img.url} handleClick={()=>{handleCardClick(img.id)}}/>) : 
