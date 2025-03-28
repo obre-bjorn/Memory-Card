@@ -43,7 +43,7 @@ useEffect(() => {
 function fetchImages(){
 
 
-  fetch("https://api.nekosapi.com/v3/images/random?limit=10", {
+  fetch("https://api.nekosapi.com/v4/images/random?limit=10", {
     method: "GET",
   }).then(res => res.json())
   .then(data => {
